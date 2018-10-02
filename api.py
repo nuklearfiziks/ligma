@@ -17,9 +17,8 @@ def getUsers():
 
 def getUserStatuses(id):
     statuses = []
-    res = mastodon.account_statuses(id, limit=1)
 
-    for status in mastodon.fetch_remaining(res[0]._pagination_next):
+    for status in mastodon.fetch_remaining(mastodon.account_statuses(id, exclude_replies=True)):
         if hasattr(status, 'content'):
             content = clean(status.content)
             statuses.append(content)
